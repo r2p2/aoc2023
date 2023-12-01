@@ -31,9 +31,9 @@ pub fn main() !void {
     if (day == 0 and part == 0) {
         try stdout.print("input file:\n{s}\n", .{input});
     } else if (day == 1 and part == 1) {
-        try stdout.print("{}\n", .{try day1.task1(input)});
+        try stdout.print("{}\n", .{day1.task1(input)});
     } else if (day == 1 and part == 2) {
-        try stdout.print("{}\n", .{try day1.task2(input)});
+        try stdout.print("{}\n", .{day1.task2(input)});
     } else {
         std.debug.panic("ERROR: No implementation found for day:{} part:{}\n", .{ day, part });
     }
