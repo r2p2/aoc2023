@@ -6,10 +6,7 @@ pub fn main() !void {
     var gpa = std.heap.GeneralPurposeAllocator(.{}){};
     defer _ = gpa.deinit();
 
-    var arena = std.heap.ArenaAllocator.init(gpa.allocator());
-    defer arena.deinit();
-
-    const allocator = arena.allocator();
+    const allocator = gpa.allocator();
 
     // parse command line arguments
     var args = std.process.args();
@@ -27,6 +24,7 @@ pub fn main() !void {
     defer file.close();
 
     const input = try file.readToEndAlloc(allocator, 1024 * 1024 * 25);
+    defer allocator.free(input);
 
     // call requested challange
     if (day == 0 and part == 0) {
