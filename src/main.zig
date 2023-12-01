@@ -27,12 +27,13 @@ pub fn main() !void {
     defer allocator.free(input);
 
     // call requested challange
+    const stdout = std.io.getStdOut().writer();
     if (day == 0 and part == 0) {
-        std.debug.print("input file:\n{s}\n", .{input});
+        try stdout.print("input file:\n{s}\n", .{input});
     } else if (day == 1 and part == 1) {
-        std.debug.print("{}\n", .{try day1.task1(input)});
+        try stdout.print("{}\n", .{try day1.task1(input)});
     } else if (day == 1 and part == 2) {
-        std.debug.print("{}\n", .{try day1.task2(input)});
+        try stdout.print("{}\n", .{try day1.task2(input)});
     } else {
         std.debug.panic("ERROR: No implementation found for day:{} part:{}\n", .{ day, part });
     }
