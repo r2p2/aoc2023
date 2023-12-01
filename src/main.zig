@@ -32,7 +32,7 @@ pub fn main() !void {
     } else if (day == 1 and part == 1) {
         std.debug.print("{}\n", .{try day1.task1(input)});
     } else if (day == 1 and part == 2) {
-        std.debug.print("{}\n", .{try day1.task2(allocator, input)});
+        std.debug.print("{}\n", .{try day1.task2(input)});
     } else {
         std.debug.panic("ERROR: No implementation found for day:{} part:{}\n", .{ day, part });
     }
