@@ -1,24 +1,41 @@
 const std = @import("std");
+const day1 = @import("day1.zig");
 
 pub fn main() !void {
-    // Prints to stderr (it's a shortcut based on `std.io.getStdErr()`)
-    std.debug.print("All your {s} are belong to us.\n", .{"codebase"});
+    // setup memory
+    var gpa = std.heap.GeneralPurposeAllocator(.{}){};
+    defer _ = gpa.deinit();
 
-    // stdout is for the actual output of your application, for example if you
-    // are implementing gzip, then only the compressed bytes should be sent to
-    // stdout, not any debugging messages.
-    const stdout_file = std.io.getStdOut().writer();
-    var bw = std.io.bufferedWriter(stdout_file);
-    const stdout = bw.writer();
+    var arena = std.heap.ArenaAllocator.init(gpa.allocator());
+    defer arena.deinit();
 
-    try stdout.print("Run `zig build test` to run the tests.\n", .{});
+    const allocator = arena.allocator();
 
-    try bw.flush(); // don't forget to flush!
-}
+    // parse command line arguments
+    var args = std.process.args();
+    _ = args.skip(); // skip binary name
 
-test "simple test" {
-    var list = std.ArrayList(i32).init(std.testing.allocator);
-    defer list.deinit(); // try commenting this out and see if zig detects the memory leak!
-    try list.append(42);
-    try std.testing.expectEqual(@as(i32, 42), list.pop());
+    const day_str = args.next().?;
+    const part_str = args.next().?;
+    const input_file_path = args.next().?;
+
+    const day = try std.fmt.parseInt(u8, day_str, 10);
+    const part = try std.fmt.parseInt(u8, part_str, 10);
+
+    // read provided input file into memory
+    const file = try std.fs.cwd().openFile(input_file_path, .{ .mode = std.fs.File.OpenMode.read_only });
+    defer file.close();
+
+    const input = try file.readToEndAlloc(allocator, 1024 * 1024 * 25);
+
+    // call requested challange
+    if (day == 0 and part == 0) {
+        std.debug.print("input file:\n{s}\n", .{input});
+    } else if (day == 1 and part == 1) {
+        std.debug.print("{}\n", .{try day1.task1(input)});
+    } else if (day == 1 and part == 2) {
+        std.debug.print("{}\n", .{try day1.task2(allocator, input)});
+    } else {
+        std.debug.panic("ERROR: No implementation found for day:{} part:{}\n", .{ day, part });
+    }
 }
