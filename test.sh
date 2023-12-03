@@ -25,6 +25,7 @@ run_int_test() {
 }
 
 run_unit_test "src/day1.zig"
+run_unit_test "src/day3.zig"
 run_int_test 1 1 "inputs/day1_part1.txt" 56108
 run_int_test 1 2 "inputs/day1_part1.txt" 55652
 
