@@ -12,16 +12,6 @@ const Node2 = struct {
     rhs: []const u8,
 };
 
-fn endReached(positions: *std.ArrayList(*[]const u8)) bool {
-    var i: usize = 0;
-    while (i < positions.items.len) : (i += 1) {
-        if (positions.items[i].*[positions.items[i].len - 1] != 'Z') {
-            return false;
-        }
-    }
-    return true;
-}
-
 pub fn task1(allocator: std.mem.Allocator, input: []const u8) !u64 {
     var nodes = std.ArrayList(Node).init(allocator);
     defer nodes.deinit();
