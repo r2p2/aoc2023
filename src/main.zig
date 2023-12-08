@@ -1,6 +1,7 @@
 const std = @import("std");
 const day1 = @import("day1.zig");
 const day3 = @import("day3.zig");
+const day4 = @import("day4.zig");
 const day8 = @import("day8.zig");
 
 pub fn main() !void {
@@ -38,6 +39,8 @@ pub fn main() !void {
         try stdout.print("{}\n", .{day1.task2(input)});
     } else if (day == 3 and part == 1) {
         try stdout.print("{}\n", .{try day3.task1(allocator, input)});
+    } else if (day == 4 and part == 1) {
+        try stdout.print("{}\n", .{day4.task1(input)});
     } else if (day == 8 and part == 1) {
         try stdout.print("{}\n", .{try day8.task1(allocator, input)});
     } else if (day == 8 and part == 2) {
