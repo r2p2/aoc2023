@@ -4,6 +4,7 @@ const day3 = @import("day3.zig");
 const day4 = @import("day4.zig");
 const day8 = @import("day8.zig");
 const day9 = @import("day9.zig");
+const day11 = @import("day11.zig");
 
 pub fn main() !void {
     // setup memory
@@ -50,6 +51,10 @@ pub fn main() !void {
         try stdout.print("{}\n", .{try day9.task1(allocator, input)});
     } else if (day == 9 and part == 2) {
         try stdout.print("{}\n", .{try day9.task2(allocator, input)});
+    } else if (day == 11 and part == 1) {
+        try stdout.print("{}\n", .{try day11.task1(allocator, input)});
+    } else if (day == 11 and part == 2) {
+        try stdout.print("{}\n", .{try day11.task2(allocator, input)});
     } else {
         std.debug.panic("ERROR: No implementation found for day:{} part:{}\n", .{ day, part });
     }

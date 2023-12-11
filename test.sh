@@ -27,6 +27,7 @@ run_unit_test "src/day3.zig"
 run_unit_test "src/day4.zig"
 run_unit_test "src/day8.zig"
 run_unit_test "src/day9.zig"
+run_unit_test "src/day11.zig"
 run_int_test 1 1 "inputs/day1_part1.txt" 56108
 run_int_test 1 2 "inputs/day1_part1.txt" 55652
 run_int_test 3 1 "inputs/day3_part1.txt" 517021
@@ -35,3 +36,5 @@ run_int_test 8 1 "inputs/day8_part1.txt" 21883
 run_int_test 8 2 "inputs/day8_part1.txt" 12833235391111
 run_int_test 9 1 "inputs/day9_part1.txt" 1789635132
 run_int_test 9 2 "inputs/day9_part1.txt" 913
+run_int_test 11 1 "inputs/day11_part1.txt" 9563821
+run_int_test 11 2 "inputs/day11_part1.txt" 827009909817
