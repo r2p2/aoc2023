@@ -63,5 +63,7 @@ run_rst_int_test() {
 #run_zig_int_test 15 1 "../inputs/day15_part1.txt" 510801
 #popd
 run_rst_unit_test
+run_rst_int_test 2 1 "../inputs/day2_part1.txt" 2600
+run_rst_int_test 2 2 "../inputs/day2_part1.txt" 86036
 run_rst_int_test 16 1 "../inputs/day16_part1.txt" 7517
 run_rst_int_test 16 2 "../inputs/day16_part1.txt" 7741

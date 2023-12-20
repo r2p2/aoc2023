@@ -1,3 +1,4 @@
+mod day02;
 mod day16;
 
 fn main() {
@@ -13,14 +14,15 @@ fn main() {
         .expect("Second argument needs to be the part.")
         .parse::<i64>()
         .unwrap();
-    let path = args
-        .next()
-        .expect("Third argument needs to be the path.");
+    let path = args.next().expect("Third argument needs to be the path.");
 
     let contents = std::fs::read_to_string(path).expect("Should be able to read the file.");
 
-
-    if day == 16 && part == 1 {
+    if day == 2 && part == 1 {
+        println!("{}", day02::task1(&contents));
+    } else if day == 2 && part == 2 {
+        println!("{}", day02::task2(&contents));
+    } else if day == 16 && part == 1 {
         println!("{}", day16::task1(&contents));
     } else if day == 16 && part == 2 {
         println!("{}", day16::task2(&contents));
