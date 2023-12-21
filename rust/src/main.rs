@@ -1,5 +1,6 @@
 mod day02;
 mod day16;
+mod day20;
 
 fn main() {
     let mut args = std::env::args();
@@ -26,5 +27,9 @@ fn main() {
         println!("{}", day16::task1(&contents));
     } else if day == 16 && part == 2 {
         println!("{}", day16::task2(&contents));
+    } else if day == 20 && part == 1 {
+        println!("{}", day20::task1(&contents));
+    } else if day == 20 && part == 2 {
+        println!("{}", day20::task2(&contents));
     }
 }
