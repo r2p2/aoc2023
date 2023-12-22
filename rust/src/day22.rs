@@ -1,3 +1,5 @@
+use rayon::prelude::*;
+
 #[derive(Clone, Debug)]
 struct Point {
     x: usize,
@@ -55,7 +57,7 @@ impl Brick {
             }
         }
 
-        Brick { id: 0,  segments }
+        Brick { id: 0, segments }
     }
 
     fn is_at_bottom(&self) -> bool {
@@ -126,27 +128,31 @@ fn settle(bricks: &mut Vec<Brick>) -> usize {
 }
 
 pub fn task1(input: &str) -> i64 {
-    let mut count_loose = 0;
     let mut bricks: Vec<_> = Vec::new();
     input
         .lines()
         .for_each(|line| bricks.push(Brick::from(line)));
     let mut id = 0;
-    bricks.iter_mut().for_each(|b| { b.id = id; id += 1;});
+    bricks.iter_mut().for_each(|b| {
+        b.id = id;
+        id += 1;
+    });
 
     settle(&mut bricks);
 
-    // find loose bricks
-    for i in 0..bricks.len() {
-        let mut brick_simulation = bricks.clone();
-        brick_simulation.swap_remove(i);
+    bricks
+        .par_iter()
+        .enumerate()
+        .map(|(i, _)| {
+            let mut brick_simulation = bricks.clone();
+            brick_simulation.swap_remove(i);
 
-        if settle(&mut brick_simulation) == 0 {
-            count_loose += 1;
-        }
-    }
-
-    count_loose
+            if settle(&mut brick_simulation) == 0 {
+                return 1;
+            }
+            return 0;
+        })
+        .sum()
 }
 
 #[test]
