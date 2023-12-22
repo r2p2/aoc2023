@@ -1,3 +1,5 @@
+use std::collections::HashSet;
+
 use rayon::prelude::*;
 
 #[derive(Clone, Debug)]
@@ -105,7 +107,7 @@ fn collides(bricks: &Vec<Brick>, other_brick: &Brick) -> bool {
 }
 
 fn settle(bricks: &mut Vec<Brick>) -> usize {
-    let mut drops = 0;
+    let mut dropped_bricks: HashSet<usize> = HashSet::new();
     loop {
         let mut dropped = false;
         for i in 0..bricks.len() {
@@ -117,12 +119,12 @@ fn settle(bricks: &mut Vec<Brick>) -> usize {
                 continue;
             }
 
+            dropped_bricks.insert(bricks[i].id);
             bricks[i].down();
-            drops += 1;
             dropped = true;
         }
         if !dropped {
-            return drops;
+            return dropped_bricks.len();
         }
     }
 }
@@ -154,6 +156,30 @@ pub fn task1(input: &str) -> i64 {
         })
         .sum()
 }
+pub fn task2(input: &str) -> usize {
+    let mut bricks: Vec<_> = Vec::new();
+    input
+        .lines()
+        .for_each(|line| bricks.push(Brick::from(line)));
+    let mut id = 0;
+    bricks.iter_mut().for_each(|b| {
+        b.id = id;
+        id += 1;
+    });
+
+    settle(&mut bricks);
+
+    bricks
+        .par_iter()
+        .enumerate()
+        .map(|(i, _)| {
+            let mut brick_simulation = bricks.clone();
+            brick_simulation.swap_remove(i);
+
+            return settle(&mut brick_simulation);
+        })
+        .sum()
+}
 
 #[test]
 fn task1_test() {
@@ -166,4 +192,17 @@ fn task1_test() {
 1,1,8~1,1,9
 "#;
     assert_eq!(task1(data), 5);
+}
+
+#[test]
+fn task2_test() {
+    let data = r#"1,0,1~1,2,1
+0,0,2~2,0,2
+0,2,3~2,2,3
+0,0,4~0,2,4
+2,0,5~2,2,5
+0,1,6~2,1,6
+1,1,8~1,1,9
+"#;
+    assert_eq!(task2(data), 7);
 }
