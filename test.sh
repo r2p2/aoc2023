@@ -65,6 +65,8 @@ run_rst_int_test() {
 run_rst_unit_test
 run_rst_int_test 2 1 "../inputs/day2_part1.txt" 2600
 run_rst_int_test 2 2 "../inputs/day2_part1.txt" 86036
+run_rst_int_test 3 1 "../inputs/day3_part1.txt" 517021
+run_rst_int_test 3 2 "../inputs/day3_part1.txt" 81296995
 run_rst_int_test 16 1 "../inputs/day16_part1.txt" 7517
 run_rst_int_test 16 2 "../inputs/day16_part1.txt" 7741
 run_rst_int_test 20 1 "../inputs/day20_part1.txt" 807069600

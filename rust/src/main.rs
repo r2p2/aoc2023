@@ -1,4 +1,5 @@
 mod day02;
+mod day03;
 mod day16;
 mod day20;
 mod day22;
@@ -24,6 +25,10 @@ fn main() {
         println!("{}", day02::task1(&contents));
     } else if day == 2 && part == 2 {
         println!("{}", day02::task2(&contents));
+    } else if day == 3 && part == 1 {
+        println!("{}", day03::task1(&contents));
+    } else if day == 3 && part == 2 {
+        println!("{}", day03::task2(&contents));
     } else if day == 16 && part == 1 {
         println!("{}", day16::task1(&contents));
     } else if day == 16 && part == 2 {
