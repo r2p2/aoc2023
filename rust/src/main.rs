@@ -36,6 +36,8 @@ fn main() {
         println!("{}", day16::task2(&contents));
     } else if day == 19 && part == 1 {
         println!("{}", day19::task1(&contents));
+    } else if day == 19 && part == 2 {
+        println!("{}", day19::task2(&contents));
     } else if day == 20 && part == 1 {
         println!("{}", day20::task1(&contents));
     } else if day == 20 && part == 2 {
