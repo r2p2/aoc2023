@@ -1,7 +1,6 @@
 use std::{
     collections::{HashMap, VecDeque},
     fmt::Display,
-    process::Output,
 };
 
 type Value = bool;
@@ -132,11 +131,11 @@ impl Module {
 
 fn process(modules: &mut Modules, pulse: &Pulse, addr: &ModulesAddr) -> Pulses {
     let idx = addr.get(&pulse.dst);
-    if (idx.is_none()) {
+    if idx.is_none() {
         return Pulses::new();
     }
 
-    let mut dst_mod = &mut modules[*idx.unwrap()];
+    let dst_mod = &mut modules[*idx.unwrap()];
     /*
     .iter_mut().find(|module| match module {
         Module::Broadcast { outputs } => return pulse.dst == "broadcaster",
@@ -294,7 +293,7 @@ pub fn task2(input: &str) -> i64 {
                 pulses_act.push_front(pulse.clone());
             });
         }
-        let count = pulses_all.iter().filter(|p| p.dst == "rx").count();
+        let count = pulses_all.iter().filter(|p| p.dst == "rx" && p.lvl == false).count();
         //println!("#{}: {}", i, count);
         if count == 1 {
             return i;

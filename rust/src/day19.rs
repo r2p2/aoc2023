@@ -1,5 +1,5 @@
 use core::panic;
-use std::{collections::HashMap, fmt, u64, usize};
+use std::{collections::HashMap, fmt, u64};
 
 #[derive(Debug)]
 struct Rule {
@@ -17,7 +17,7 @@ impl Workflow {
         let new_line = line.replace("}", "");
         let mut it = new_line.split('{');
         let name = it.next().unwrap();
-        let mut rule_it = it.next().unwrap().split(',');
+        let rule_it = it.next().unwrap().split(',');
 
         let mut wf = Workflow { rules: Vec::new() };
 
