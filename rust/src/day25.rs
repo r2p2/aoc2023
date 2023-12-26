@@ -1,5 +1,3 @@
-use std::collections::HashSet;
-
 use rayon::prelude::*;
 
 #[derive(Debug, Clone)]
@@ -36,12 +34,14 @@ impl<'a> Node<'a> {
 
 struct Map<'a> {
     nodes: Vec<Node<'a>>,
+    nodes_active: usize,
     connections: Vec<(usize, usize)>,
 }
 impl<'a> Map<'a> {
     fn from(connections: &Connections<'a>) -> Map<'a> {
         let mut map = Map {
             nodes: Vec::new(),
+            nodes_active: 0,
             connections: Vec::new(),
         };
 
@@ -49,9 +49,11 @@ impl<'a> Map<'a> {
         connections.iter().for_each(|c| {
             if let None = map.find_node(c.a) {
                 map.nodes.push(Node::new(c.a));
+                map.nodes_active += 1;
             }
             if let None = map.find_node(c.b) {
                 map.nodes.push(Node::new(c.b));
+                map.nodes_active += 1;
             }
         });
 
@@ -67,12 +69,7 @@ impl<'a> Map<'a> {
         map
     }
     fn count_active_nodes(&self) -> usize {
-        let mut seen = HashSet::new();
-        self.connections.iter().for_each(|(s, d)| {
-            seen.insert(*s);
-            seen.insert(*d);
-        });
-        seen.len()
+        self.nodes_active
     }
     fn count_edges(&self) -> usize {
         self.connections.len()
@@ -90,6 +87,7 @@ impl<'a> Map<'a> {
         self.connections.remove(contract_idx);
 
         self.nodes[src_idx].joined += self.nodes[dst_idx].joined;
+        self.nodes_active -= 1;
 
         self.connections.iter_mut().for_each(|(src, dst)| {
             if *src == dst_idx {
