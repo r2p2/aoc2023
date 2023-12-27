@@ -89,14 +89,14 @@ impl<'a> Map<'a> {
         self.nodes[src_idx].joined += self.nodes[dst_idx].joined;
         self.nodes_active -= 1;
 
-        self.connections.iter_mut().for_each(|(src, dst)| {
+        self.connections.retain_mut(|(src, dst)| {
             if *src == dst_idx {
                 *src = src_idx;
             } else if *dst == dst_idx {
                 *dst = src_idx;
             }
+            src != dst
         });
-        self.connections.retain(|(a, b)| a != b); // remove self-referential
     }
 }
 
