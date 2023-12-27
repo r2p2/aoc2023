@@ -1,5 +1,4 @@
 use rand::Rng;
-use rayon::prelude::*;
 
 #[derive(Debug, Clone)]
 struct Connection<'a> {
@@ -107,23 +106,18 @@ pub fn task1(input: &str) -> usize {
     let connections = parse(input);
     let main_map = Map::from(&connections);
 
-    // We hope we don't need to try it that often!
-    (0..100_000_000)
-        .into_par_iter()
-        .find_map_first(|_| {
-            let mut map = main_map.clone(); // Map::from(&connections);
-            while map.count_active_nodes() > 2 {
-                map.contract();
-            }
-            let (src_idx, dst_idx) = map.connections.first().unwrap();
-            let solution = map.nodes[*src_idx].joined * map.nodes[*dst_idx].joined;
-            println!("{}:{}", solution, map.count_edges() / 2);
-            if map.count_edges() / 2 == 3 {
-                return Some(solution);
-            }
-            return None;
-        })
-        .unwrap()
+    loop {
+        let mut map = main_map.clone(); // Map::from(&connections);
+        while map.count_active_nodes() > 2 {
+            map.contract();
+        }
+        let (src_idx, dst_idx) = map.connections.first().unwrap();
+        let solution = map.nodes[*src_idx].joined * map.nodes[*dst_idx].joined;
+        println!("{}:{}", solution, map.count_edges() / 2);
+        if map.count_edges() / 2 == 3 {
+            return solution;
+        }
+    }
 }
 
 #[test]
