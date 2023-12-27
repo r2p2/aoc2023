@@ -31,6 +31,8 @@ run_rst_int_test 3 1 "../inputs/day3_part1.txt" 517021
 run_rst_int_test 3 2 "../inputs/day3_part1.txt" 81296995
 run_rst_int_test 5 1 "../inputs/day5_part1.txt" 218513636
 run_rst_int_test 5 2 "../inputs/day5_part1.txt" 81956384
+run_rst_int_test 6 1 "../inputs/day6_part1.txt" 220320
+run_rst_int_test 6 2 "../inputs/day6_part1.txt" 34454850
 run_rst_int_test 16 1 "../inputs/day16_part1.txt" 7517
 run_rst_int_test 16 2 "../inputs/day16_part1.txt" 7741
 run_rst_int_test 19 1 "../inputs/day19_part1.txt" 353046
