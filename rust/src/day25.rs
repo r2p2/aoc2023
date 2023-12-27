@@ -1,3 +1,4 @@
+use rand::Rng;
 use rayon::prelude::*;
 
 #[derive(Debug, Clone)]
@@ -32,6 +33,7 @@ impl<'a> Node<'a> {
     }
 }
 
+#[derive(Clone)]
 struct Map<'a> {
     nodes: Vec<Node<'a>>,
     nodes_active: usize,
@@ -80,9 +82,10 @@ impl<'a> Map<'a> {
             .enumerate()
             .find_map(|(i, n)| if n.id == id { Some(i) } else { None })
     }
+
     fn contract(&mut self) {
-        let contract_idx = rand::random::<usize>() % self.count_edges(); // FIXME: modulo
-                                                                         // considered problematic
+        let contract_idx = rand::thread_rng().gen_range(0..self.count_edges());
+
         let (src_idx, dst_idx) = self.connections[contract_idx];
         self.connections.remove(contract_idx);
 
@@ -102,21 +105,25 @@ impl<'a> Map<'a> {
 
 pub fn task1(input: &str) -> usize {
     let connections = parse(input);
+    let main_map = Map::from(&connections);
 
     // We hope we don't need to try it that often!
-    (0..100_000_000).into_par_iter().find_map_first(|_| {
-        let mut map = Map::from(&connections);
-        while map.count_active_nodes() > 2 {
-            map.contract();
-        }
-        let (src_idx, dst_idx) = map.connections.first().unwrap();
-        let solution = map.nodes[*src_idx].joined * map.nodes[*dst_idx].joined;
-        println!("{}:{}", solution, map.count_edges() / 2);
-        if map.count_edges() / 2 == 3 {
-            return Some(solution);
-        }
-        return None;
-    }).unwrap()
+    (0..100_000_000)
+        .into_par_iter()
+        .find_map_first(|_| {
+            let mut map = main_map.clone(); // Map::from(&connections);
+            while map.count_active_nodes() > 2 {
+                map.contract();
+            }
+            let (src_idx, dst_idx) = map.connections.first().unwrap();
+            let solution = map.nodes[*src_idx].joined * map.nodes[*dst_idx].joined;
+            println!("{}:{}", solution, map.count_edges() / 2);
+            if map.count_edges() / 2 == 3 {
+                return Some(solution);
+            }
+            return None;
+        })
+        .unwrap()
 }
 
 #[test]
