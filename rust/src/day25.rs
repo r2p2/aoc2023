@@ -86,7 +86,7 @@ impl<'a> Map<'a> {
         let contract_idx = rand::thread_rng().gen_range(0..self.count_edges());
 
         let (src_idx, dst_idx) = self.connections[contract_idx];
-        self.connections.remove(contract_idx);
+        self.connections.swap_remove(contract_idx);
 
         self.nodes[src_idx].joined += self.nodes[dst_idx].joined;
         self.nodes_active -= 1;
@@ -113,7 +113,6 @@ pub fn task1(input: &str) -> usize {
         }
         let (src_idx, dst_idx) = map.connections.first().unwrap();
         let solution = map.nodes[*src_idx].joined * map.nodes[*dst_idx].joined;
-        println!("{}:{}", solution, map.count_edges() / 2);
         if map.count_edges() / 2 == 3 {
             return solution;
         }
