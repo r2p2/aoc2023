@@ -40,4 +40,4 @@ run_rst_int_test 19 2 "../inputs/day19_part1.txt" 125355665599537
 run_rst_int_test 20 1 "../inputs/day20_part1.txt" 807069600
 run_rst_int_test 22 1 "../inputs/day22_part1.txt" 454
 run_rst_int_test 22 2 "../inputs/day22_part1.txt" 74287
-run_rst_int_test 25 1 "../inputs/day25_part1.txt" 282626
+run_rst_int_test 25 1 "../inputs/day25_part1.txt" 582626
